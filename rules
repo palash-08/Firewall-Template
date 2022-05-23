@@ -71,7 +71,7 @@ echo "Firewall - Drop all invalid packet."
 # Whitelist mysql port.
 $IPTABLES -A INPUT -p tcp --dport 3306 -s 127.0.0.1 -j ACCEPT #Enable 3306 on 127.0.0.1.
 $IPTABLES -A INPUT -p tcp --dport 3306 -s 1.1.1.1 -j ACCEPT #Enable 3306 on 1.1.1.1.
-$IPTABLES -A INPUT -p tcp --dport 3306 -j DROP #Block all IP to 3306 if its not 127.0.0.1 or 1.1.1.1.
+#Block all IP to 3306 if its not 127.0.0.1 or 1.1.1.1.
 echo "Firewall - WL MySQL port."
 #------------------------------------------------------------------------------------------
 
@@ -101,7 +101,7 @@ echo "Firewall - Limitation to prevent ssh bruteforce."
 # /!\ Drop all packet with timestamp on MINECRAFT_PORT if it limit 3 per sec. 
 # (This can fix some exploits, but its an experimental rules !) /!\
 # Don't use it with TCPShield, HAProxy (or alternatives..) /!\
-$IPTABLES -t mangle -A PREROUTING -p tcp --dport $MINECRAFT_PORT -m tcp --syn --tcp-option 8 -m limit --limit $burstconnstimestamp/s -j ACCEPT
+$IPTABLES -t mangle -A PREROUTING -p tcp --dport $sqlMINECRAFT_PORT -m tcp --syn --tcp-option 8 -m limit --limit $burstconnstimestamp/s -j ACCEPT
 $IPTABLES -t mangle -A PREROUTING -p tcp --dport $MINECRAFT_PORT -m tcp --syn --tcp-option 8 -j DROP
 
 echo " "
